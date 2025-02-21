@@ -21,12 +21,12 @@ scene.add(light);
 const ambientLight = new THREE.AmbientLight(0x404040, 2);
 scene.add(ambientLight);
 
-// Load GLB Model from GitHub Pages
+// Load GLB Model
 const loader = new GLTFLoader();
 let model;
 
-// Update the path to load from your GitHub repository
-const modelURL = 'https://Surajcuriousanimator.github.io/threejs-website/models/Material Tetrahedron.glb';
+// Correct the URL to your model on GitHub Pages
+const modelURL = 'https://Surajcuriousanimator.github.io/threejs-website/models/Material%20Tetrahedron.glb';
 
 loader.load(modelURL, (gltf) => {
     model = gltf.scene;
