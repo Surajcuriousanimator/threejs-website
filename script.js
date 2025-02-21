@@ -18,13 +18,21 @@ const canvas = document.getElementById("three-canvas");
 const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-// Add lights for a brighter scene
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(5, 5, 5);
+// Adjust the lights for a brighter scene
+
+// Increase directional light intensity and adjust its position
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+directionalLight.position.set(5, 10, 7.5);
 scene.add(directionalLight);
 
-const ambientLight = new THREE.AmbientLight(0x404040, 2);
+// Increase ambient light intensity
+const ambientLight = new THREE.AmbientLight(0xffffff, 2.5);
 scene.add(ambientLight);
+
+// Add a hemisphere light for additional fill
+const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1);
+hemisphereLight.position.set(0, 20, 0);
+scene.add(hemisphereLight);
 
 // Load the 3D Model using GLTFLoader
 const loader = new THREE.GLTFLoader();
@@ -47,7 +55,7 @@ loader.load(
 
 // Add OrbitControls for free rotation
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;   // Smoother controls
+controls.enableDamping = true;
 controls.dampingFactor = 0.1;
 controls.rotateSpeed = 0.5;
 
