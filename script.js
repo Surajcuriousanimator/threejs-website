@@ -1,5 +1,6 @@
-// Create the scene
+// Create the scene and set a white background
 const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xffffff);
 
 // Create the camera
 const camera = new THREE.PerspectiveCamera(
@@ -17,7 +18,7 @@ const canvas = document.getElementById("three-canvas");
 const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-// Add lights
+// Add lights for a brighter scene
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(5, 5, 5);
 scene.add(directionalLight);
@@ -44,6 +45,12 @@ loader.load(
   }
 );
 
+// Add OrbitControls for free rotation
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;   // Smoother controls
+controls.dampingFactor = 0.1;
+controls.rotateSpeed = 0.5;
+
 // Handle window resize
 window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -51,29 +58,10 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
 });
 
-// Rotate the model with mouse drag
-let isDragging = false;
-let previousMouseX = 0;
-
-document.addEventListener('mousedown', (event) => {
-  isDragging = true;
-  previousMouseX = event.clientX;
-});
-
-document.addEventListener('mousemove', (event) => {
-  if (!isDragging || !model) return;
-  let deltaX = event.clientX - previousMouseX;
-  model.rotation.y += deltaX * 0.01;
-  previousMouseX = event.clientX;
-});
-
-document.addEventListener('mouseup', () => {
-  isDragging = false;
-});
-
 // Animation loop
 function animate() {
   requestAnimationFrame(animate);
+  controls.update();
   renderer.render(scene, camera);
 }
 
